@@ -1,0 +1,25 @@
+﻿# Comic Escalation (Blake)
+
+## R — Reading
+Escalation is predictable variation on a comic rule. Each beat tests the rule under a new condition — escalation works when the audience can predict the pattern but not the specific variation.
+
+## I — Interpretation
+Escalation is the engine that keeps a comic premise alive across a scene. Without it, comedy is a single beat repeated. With it, the premise generates multiple jokes from the same engine.
+
+## A1 — Application
+For shortform: identify the comic rule, then ask "what's the most extreme version of this rule?" — that's your last beat.
+
+## A2 — Trigger signals
+- "Escalate this bit" - "This joke only works once" - "How do I make this funnier?"
+
+## E — Executable steps
+1. State the comic rule.
+2. Identify the rule's variable (who/what/how).
+3. Escalate by degree: more extreme, more characters, higher stakes.
+4. The final beat breaks the pattern — the rule applied to itself or pushed to impossibility.
+5. Check: each beat must be *more* than the last, not just *different*.
+
+## B — Boundary / common failures
+- **Trap**: escalation that goes in circles — same degree, different decoration.
+- **Trap**: breaking the rule too early — the last beat should be the one that can't be topped.
+- **Trap**: escalation that loses the audience — if the premise is forgotten, the escalation is too big a jump.
