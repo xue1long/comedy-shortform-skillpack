@@ -47,7 +47,7 @@ description: 从一句创意或已有剧本写可拍喜剧短剧本，估算时�
 
 ## 底层能力路由
 
-写作流程按阶段调用 `distillation/capability-map.md` 中映射的书籍 Pack router；每个 router 负责把任务转发到其晋升的独立 Skill。**不能只引用名称就声称调用**——每阶段必须实际加载对应 router 的 SKILL.md，按其中的路由表选一个 promoted skill，应用其方法后再回到本流程。
+写作流程按下方工作流阶段表调用书籍 Pack router；每个 router 负责把任务转发到其晋升的独立 Skill。**不能只引用名称就声称调用**——每阶段必须实际加载对应 router 的 SKILL.md，按其中的路由表选一个 promoted skill，应用其方法后再回到本流程。
 
 按工作流阶段调用：
 

@@ -1,69 +1,83 @@
 # Comedy Shortform Skill Pack
 
-一组可独立调用的 Codex Skills，用于创作或诊断可拍喜剧短剧。默认以 60 秒为规划参考；用户可指定其他时长，初稿会记录估算时长，并可继续精简或补充。
+用于创作和诊断可拍喜剧短剧的 Codex Skills。未指定时长时，主入口以 60 秒为规划参考；用户可以指定其他目标时长。初稿会标注估算时长，并给出具体的精简或补充方向。
 
-## Skills
+## 当前发布内容
 
-- **`comedy-shortform-writer`**：从一句创意或已有剧本写短剧初稿，估算时长并给出后续修改方向；主入口自足，不依赖辅助 Skill 自动加载。
-- **`comedy-engine`**：提炼可重复、可变化的喜剧规则。
-- **`structure-sketch`**：设计 Sketch 的建立、变化与兑现。
-- **`structure-duo`**：设计双主角目标、攻防与权力变化；可与 Sketch 叠加。
-- **`script-diagnosis`**：诊断已有剧本，并在明确授权时做一次定向改写。
+`publish` 分支的 `.agents/skills/` 是安装来源，目前包含 **62 个 Skill**：
 
-## 适用范围与输出
+- **5 个项目入口**：完整写作、喜剧机制、Sketch 结构、双主角结构和剧本诊断。
+- **9 个书籍 Pack 路由**：`comic-toolbox`、`art-of-character`、`hidden-tools-comedy`、`comedy-writers-companion`、`comedy-bible`、`writing-dialogue`、`screenplay`、`comedy-movie`、`sitcom`。
+- **48 个细分 Skill**：由路由 Skill 按任务选择，可单独调用。
 
-主入口支持完整创作与改稿。未指定时长时以 60 秒为规划参考；用户明确要求其他时长时按该目标继续。初稿时长偏离目标时，标注估算并指出后续精简或补充方向。只有用户明确要求成片时长或硬上限时，才按该要求修订并验收。
+常用入口：
 
-验收量表检查时间码和时长估算是否自洽、偏离目标时是否给出可执行的精简或补充方向。试读用于验证估算并指导修改；初稿偏离目标本身不判失败。量表见 `evaluations/rubric.md`。
+| Skill | 用途 |
+| --- | --- |
+| [`comedy-shortform-writer`](.agents/skills/comedy-shortform-writer/SKILL.md) | 从创意或已有剧本写短剧初稿、估算时长并给出修改方向。 |
+| [`comedy-engine`](.agents/skills/comedy-engine/SKILL.md) | 提炼可重复、可变化的喜剧规则。 |
+| [`structure-sketch`](.agents/skills/structure-sketch/SKILL.md) | 设计 Sketch 的建立、变化与兑现。 |
+| [`structure-duo`](.agents/skills/structure-duo/SKILL.md) | 设计双主角目标、攻防与权力变化；可与 Sketch 叠加。 |
+| [`script-diagnosis`](.agents/skills/script-diagnosis/SKILL.md) | 诊断已有剧本；只有明确要求改稿时才定向重写。 |
+
+主入口按其工作流阶段表加载相应路由和细分 Skill。仓库的 [`skills/SKILL.md`](skills/SKILL.md) 是主入口的单文件镜像；安装整套 Skill 时请使用 `.agents/skills/`，以保留它引用的其他 Skill。
+
+## 写作与时长
+
+主入口支持完整创作与改稿。初稿偏离目标时长时，会如实标注估算和可改段落；偏离目标本身不代表初稿失败。只有用户明确要求成片时长或硬上限时，才按该要求修订并复核。
 
 完成创作或改稿时，主入口依次输出：
 
 1. 创意或原稿摘要与保留项／假设。
 2. 喜剧形式与人物配置。
-3. 时间码 Beat Sheet。
-4. 短剧本。
+3. 连续时间码 Beat Sheet。
+4. 包含动作和对白的短剧本。
 5. 诊断和本轮修订点。
 
-时长调整可以分两轮完成。第一轮先写完整初稿，标出时长估算和建议精简／补充的位置；你决定调整方向后，再要求压到成片上限或补足到目标长度。精简会先合并重复节拍、压缩冗长对白，同时保留核心笑点的建立、升级和兑现；不会只重标时间码。
+例如，先说“以 60 秒为目标写完整初稿，保留所有有效笑点，给出估算和建议剪辑点”；看完后再说“把这份稿子精简到不超过 60 秒，保留核心机制和结尾兑现”。如果一开始就要求成片版或硬上限，主入口会直接按该限制整理成稿。
 
-例如：先说“以 60 秒为目标写完整初稿，保留所有有效笑点，给出估算和建议剪辑点”；看完后再说“按你建议的方案，把这份稿子精简到不超过 60 秒，保留核心机制和结尾兑现”。如果你一开始就要求成片版或硬上限，主入口会直接按该限制整理成稿。
-
-如果关键事实冲突、核心要求冲突，或需要改动用户要求保留的原稿核心项，先提问并暂停完整剧本。只有明确的成片时长或制作限制仍未满足时，才标注「待修改稿」并说明原因。
+如果关键事实或核心要求冲突，或者必须改动用户指定的原稿保留项，主入口会先询问取舍。
 
 ## 安装
 
-在仓库根目录运行 PowerShell。Codex 从仓库的 `.agents/skills` 发现项目 Skill，也从 `$HOME/.agents/skills` 发现用户 Skill。本包测试应在隔离测试目录的 `.agents/skills` 下准备技能；通过 Task 8 测试环境验收后，用户侧安装目标为 `$HOME/.agents/skills`。遇到任何同名 Skill 时停止，不覆盖已有目录。
+在 PowerShell 中运行以下命令。Codex 可从仓库内的 `.agents/skills/` 发现项目 Skill；命令会将整套 Skill 复制到当前用户的 `$HOME/.agents/skills/`。安装前会检查源文件和同名目标目录，遇到冲突即停止，不覆盖已有 Skill。
 
 ```powershell
-$sourceRoot = Join-Path (Get-Location) 'skills'
+git clone https://github.com/xue1long/comedy-shortform-skillpack.git
+cd comedy-shortform-skillpack
+
+$sourceRoot = Join-Path (Get-Location) '.agents\skills'
 $targetRoot = Join-Path $env:USERPROFILE '.agents\skills'
-$names = @('comedy-shortform-writer','comedy-engine','structure-sketch','structure-duo','script-diagnosis')
-foreach ($name in $names) {
-    if (-not (Test-Path -LiteralPath (Join-Path $sourceRoot "$name\SKILL.md"))) { throw "Missing source Skill: $name" }
+$skillDirs = @(Get-ChildItem -LiteralPath $sourceRoot -Directory)
+if ($skillDirs.Count -eq 0) { throw 'No skills found in .agents/skills' }
+
+foreach ($dir in $skillDirs) {
+    if (-not (Test-Path -LiteralPath (Join-Path $dir.FullName 'SKILL.md'))) {
+        throw "Missing SKILL.md: $($dir.Name)"
+    }
+    if (Test-Path -LiteralPath (Join-Path $targetRoot $dir.Name)) {
+        throw "Skill already exists: $($dir.Name)"
+    }
 }
+
 New-Item -ItemType Directory -Path $targetRoot -Force | Out-Null
-foreach ($name in $names) {
-    if (Test-Path -LiteralPath (Join-Path $targetRoot $name)) { throw "Skill already exists: $name" }
+foreach ($dir in $skillDirs) {
+    Copy-Item -LiteralPath $dir.FullName -Destination (Join-Path $targetRoot $dir.Name) -Recurse
 }
-foreach ($name in $names) {
-    Copy-Item -LiteralPath (Join-Path $sourceRoot $name) -Destination (Join-Path $targetRoot $name) -Recurse
-}
+"Installed $($skillDirs.Count) skills"
 ```
 
-安装步骤只是 Task 8 通过后的用户侧交付步骤（Task 9）；在此之前不得复制到用户目录。CLI runtime 检查和 Codex 桌面版技能选择器检查是两种独立证据：`codex.exe exec` 可用于非 UI 的 CLI 检查，但不能替代桌面版选择器、触发行为、读者反馈或计时试读。比如，完整创作或改稿选 `comedy-shortform-writer`；只提炼喜剧机制选 `comedy-engine`；只诊断已有稿件选 `script-diagnosis`。
+安装后开启新的 Codex 对话，让客户端重新扫描 Skill。完整创作或改稿选 `comedy-shortform-writer`；只提炼喜剧机制选 `comedy-engine`；只诊断已有稿件选 `script-diagnosis`。
 
 ## 检查
 
-在仓库根目录运行静态包检查：
+可在仓库根目录核对实际发布的 Skill 目录及其入口文件：
 
 ```powershell
-pwsh -NoProfile -File evaluations/check-package.ps1
+$skillDirs = @(Get-ChildItem '.agents\skills' -Directory)
+$missing = @($skillDirs | Where-Object { -not (Test-Path -LiteralPath (Join-Path $_.FullName 'SKILL.md')) })
+if ($missing.Count -gt 0) { throw "Missing SKILL.md: $($missing.Name -join ', ')" }
+"Found $($skillDirs.Count) skills"
 ```
 
-也可以只检查一个 Skill：
-
-```powershell
-pwsh -NoProfile -File evaluations/check-package.ps1 -Only comedy-shortform-writer
-```
-
-静态检查验证文件、frontmatter、必要栏目，以及主入口的四个包内相对引用和对应目标文件；它不证明 Skill 在 Codex 中可发现、触发正确、剧本通过试读或短于 60 秒。场景、触发测试和人工评估量表见 `evaluations/`。
+当前 `publish` 分支没有 `evaluations/check-package.ps1`、`evaluations/rubric.md` 或 `evaluations/` 测试目录，因此不提供自动验收命令。目录检查只证明文件存在；Codex 中能否发现和触发 Skill、剧本是否可拍，以及成片时长，仍需分别在客户端试用、朗读和试拍验证。
